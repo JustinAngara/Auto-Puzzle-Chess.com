@@ -35,11 +35,13 @@ public class Main implements NativeKeyListener{
 	private static Timer t; 
 	private static JLabel lblNewLabel = new JLabel("");
 	private static int x1,x2,y1,y2;
+	static StockfishTest sft;
 	/**
 	 * Launch the application.
 	 * @throws AWTException 
 	 */
 	public static void main(String[] args) throws AWTException {
+		sft = new StockfishTest();
 		GlobalScreen.addNativeKeyListener(new Main());
 		LogManager.getLogManager().reset();
 
@@ -74,7 +76,8 @@ public class Main implements NativeKeyListener{
 		x2 = 1621;
 		y2 = 1409;
 		t = new Timer(0, (ActionEvent e) -> {
-			returnImage();
+			
+		    lblNewLabel.setIcon(returnImage());
 			System.out.println("hope fully");
 		});
 
@@ -107,7 +110,6 @@ public class Main implements NativeKeyListener{
 		    BufferedImage capturedImage = screenshot.capture(x1, y1, x2, y2);
 		    capturedImage = Screenshot.convertToGrayscale(capturedImage);
 		    ImageIcon t = new ImageIcon(capturedImage);
-		    lblNewLabel.setIcon(t);
 		    return t;
 		} catch (AWTException e1) {
 		    e1.printStackTrace();
@@ -120,16 +122,19 @@ public class Main implements NativeKeyListener{
 	public void nativeKeyPressed(NativeKeyEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode()==NativeKeyEvent.VC_C) {
-			returnImage();
+			lblNewLabel.setIcon(returnImage());
+			try {
+				sft.run();
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public void nativeKeyReleased(NativeKeyEvent arg0) {
-		// TODO Auto-generated method stub
-		if(arg0.getKeyCode()==NativeKeyEvent.VC_C) {
-			returnImage();
-		}
+
 	}
 
 	@Override

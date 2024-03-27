@@ -1,0 +1,53 @@
+LSQR: 10980
+DSQR: 7316
+
+BlACK PAWN:
+Light Square: 8887
+Dark Square: 6324
+
+Black Rook:
+Light Square: 8410 
+Dark Square: 6105
+
+Black Bishop:
+Light Square: 8028
+Dark Square: 5933
+
+Black Knight: 
+Light Square: 6756
+Dark Square: 5320
+
+Black Queen:
+Light Square: 6836
+Dark Square: 5416
+
+Black King:
+Light Square: 7086
+Dark Square: 5453 
+
+White Pawn:
+Light Square: 10763 
+Dark Square: 8200 
+
+White Rook:
+Light Square: 8802 
+Dark Square: 11107
+ 
+White Bishop:
+Light Square: 10890
+Dark Square: 8797
+
+White Knight:
+Light Square: 10952
+Dark Square: 9516
+
+White Queen:
+Light Square: 11378
+Dark Square: 9957
+
+White King: 
+Light Square: 10739
+Dark Square: 9104
+
+
+

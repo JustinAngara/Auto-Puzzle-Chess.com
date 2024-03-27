@@ -1,5 +1,6 @@
 package com.chepuz.main;
 
+import java.awt.AWTException;
 import java.io.IOException;
 
 public class StockfishTest {
@@ -22,19 +23,22 @@ public class StockfishTest {
 		
 		System.out.println("Best move : " + client.getBestMove(FEN, 100));
 		
-		
+// do not forget to close this
 //		client.stopEngine();
 		return client.getBestMove(FEN, 100);
 	}
-	
-	public static void main(String[] args)  {
+	public static void run() throws AWTException {
 		client = new Stockfish();
+		ExtractSquares sr = new ExtractSquares();
 		try {
-			stockfishHandler("8/8/8/4p1K1/4P3/3k4/8/8 w");
+			stockfishHandler(sr.retrieveFen());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 //			e.printStackTrace();
 		}
+	}
+	public static void main(String[] args) throws AWTException  {
+//		run();
 		
 	}
 }
