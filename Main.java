@@ -18,6 +18,13 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
+/*
+ * possible apis 
+ * https://www.chessdb.cn/cdb.php?action=querybest&board=rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR%20b%20KQkq%20-%200%202
+ * https://www.chessdb.cn/cdb.php?action=querybest&board=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR%20w%20KQkq%20-%200%201
+ * https://chess-api.com/
+ * 
+ * */
 
 public class Main implements NativeKeyListener{
 
