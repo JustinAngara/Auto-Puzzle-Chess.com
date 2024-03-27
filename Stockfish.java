@@ -1,16 +1,12 @@
 package com.chepuz.main;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-/**
- * A simple and efficient client to run Stockfish from Java
- * 
- * @author Rahul A R
- * 
- */
+
 public class Stockfish {
 
 	private Process engineProcess;
@@ -19,12 +15,6 @@ public class Stockfish {
 
 	private static final String PATH = "C:\\Users\\justi\\eclipse-workspace\\JustinProgram\\src\\com\\chepuz\\main\\Stockfish\\stockfish\\stockfish-windows-x86-64.exe";
 
-	/**
-	 * Starts Stockfish engine as a process and initializes it
-	 * 
-	 * @param None
-	 * @return True on success. False otherwise
-	 */
 	public boolean startEngine() {
 		try {
 			engineProcess = Runtime.getRuntime().exec(PATH);
@@ -91,16 +81,9 @@ public class Stockfish {
 	 * @return Best Move in PGN format
 	 */
 	public String getBestMove(String fen, int waitTime) {
-		try {
 		sendCommand("position fen " + fen);
 		sendCommand("go movetime " + waitTime);
-		
 		return getOutput(waitTime + 20).split("bestmove ")[1].split(" ")[0];
-	
-		} catch(Exception e) {
-			
-		}
-		return null;
 	}
 
 	/**

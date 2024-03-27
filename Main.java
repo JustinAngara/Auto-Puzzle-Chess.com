@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -118,6 +119,7 @@ public class Main implements NativeKeyListener{
 
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent arg0) {
 		// TODO Auto-generated method stub
@@ -125,7 +127,7 @@ public class Main implements NativeKeyListener{
 			lblNewLabel.setIcon(returnImage());
 			try {
 				sft.run();
-			} catch (AWTException e) {
+			} catch (AWTException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

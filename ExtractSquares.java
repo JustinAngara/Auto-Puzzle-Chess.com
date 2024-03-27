@@ -4,15 +4,14 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+
 
 public class ExtractSquares {
 	public static Map<Integer, String> pieceMap = new HashMap<>();
@@ -127,7 +126,7 @@ public class ExtractSquares {
         }
     }
 
-    public static String getFENNotation(String[][] board, String activeColor) {
+    public String getFENNotation(String[][] board, String activeColor) {
         StringBuilder fen = new StringBuilder();
 
         // Iterate through rows (in correct order this time)
@@ -176,7 +175,7 @@ public class ExtractSquares {
 		return 75==bot.getPixelColor(x,y).getRed();
 	}
 	
-    public static String retrieveFen() throws IOException, AWTException {
+    public String retrieveFen() throws IOException, AWTException {
     	int x1,x2,y1,y2;
 		x1 = 356;
 		y1 = 144;
@@ -195,6 +194,6 @@ public class ExtractSquares {
     	return getFENNotation(getChessboard(b), getTurn());
     }
     public static void main(String[] args) throws IOException, AWTException {
-    	retrieveFen();
+    	
     }
 }
