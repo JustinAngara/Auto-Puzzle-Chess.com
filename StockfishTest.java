@@ -9,20 +9,20 @@ public class StockfishTest {
 		
 
 		// initialize and connect to engine
-		if (client.startEngine()) {
-			System.out.println("Engine has started..");
-		} else {
-			System.out.println("Oops! Something went wrong..");
+		
+		if (!client.startEngine()) {
+			return null;
 		}
 
 		// send commands manually
 		client.sendCommand("uci");
 
-		// receive output dump
-		System.out.println(client.getOutput(0));
-
-		// get the best move for a position with a given think time
+		
+		client.getOutput(0);
+		
 		System.out.println("Best move : " + client.getBestMove(FEN, 100));
+		
+		
 //		client.stopEngine();
 		return client.getBestMove(FEN, 100);
 	}
@@ -30,7 +30,7 @@ public class StockfishTest {
 	public static void main(String[] args)  {
 		client = new Stockfish();
 		try {
-			stockfishHandler("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+			stockfishHandler("8/8/8/4p1K1/4P3/3k4/8/8 w");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 //			e.printStackTrace();
