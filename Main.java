@@ -54,7 +54,7 @@ public class Main implements NativeKeyListener{
 		} catch (NativeHookException ex) {
 		
 		}
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

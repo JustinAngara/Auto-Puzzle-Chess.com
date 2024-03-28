@@ -19,14 +19,15 @@ public class StockfishTest {
 		client.sendCommand("uci");
 
 		// receive output dump
-		System.out.println(client.getOutput(0));
-
+		client.getOutput(0);
 		
 		// do not forget to close this
 		//		client.stopEngine();
 		
 		String bestMove = client.getBestMove(FEN, 100);
 		System.out.println("best move: "+bestMove);
+		
+
 		return bestMove;
 	}
 	public static void run() throws IOException, AWTException {
@@ -34,7 +35,6 @@ public class StockfishTest {
 		sr = new ExtractSquares();
 		System.out.println(sr.retrieveFen());
 		try {
-
 			stockfishHandler(sr.retrieveFen());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
