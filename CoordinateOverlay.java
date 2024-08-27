@@ -24,10 +24,10 @@ public class CoordinateOverlay {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		x1 = 356;
-		y1 = 144;
-		x2 = 1621;
-		y2 = 1409;
+		x1 = Main.x1;
+		y1 = Main.y1;
+		x2 = Main.x2;
+		y2 = Main.y2;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

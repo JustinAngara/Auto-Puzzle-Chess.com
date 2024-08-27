@@ -3,13 +3,14 @@ package com.chepuz.main;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
-
-
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 
 
@@ -31,12 +32,7 @@ public class ExtractSquares {
                 int endX = Math.min(startX + squareSize, screenshot.getWidth()); // Handle potential right edge overflow
                 int endY = Math.min(startY + squareSize, screenshot.getHeight()); // Handle potential bottom edge overflow
 
-                BufferedImage subImage = screenshot.getSubimage(startX, startY, endX - startX, endY - startY);
-
-                // Save the extracted square image with a unique name (replace with your desired naming convention)
-// saves to file loc
-//                ImageIO.write(subImage, "PNG", new File("square_" + count + ".png"));
-                
+                BufferedImage subImage = screenshot.getSubimage(startX, startY, endX - startX, endY - startY);                
                 bf.add(subImage);
                 
                 count++;
@@ -47,14 +43,24 @@ public class ExtractSquares {
 		return bf;
     }
     public static int getAverageRGB(BufferedImage bi) {
-    	int c= 0;
-    	int w = bi.getWidth();
+    	// 158/2 = 79
+    	
+    	int c = 0;
+    	int l = bi.getHeight()/2;
 
-    	for(int i =10; i<bi.getHeight()-10; i++) {
-            int rgb = bi.getRGB(2/2, i);
-            c += ((rgb >> 16) & 0xff) + ((rgb >> 8) & 0xff) + (rgb & 0xff);
+    	for(int x = -12; x<12;x++) {
+    		for(int y=-2; y<2;y++) {
+	    		int clr = bi.getRGB(l+x, l+y);
+	    		
+		        int red = (clr & 0x00ff0000) >> 16;
+		        int green = (clr & 0x0000ff00) >> 8;
+		        int blue =   clr & 0x000000ff;
+	    		System.out.println("("+red+", "+green+", "+blue+") AT: ("+(x+l)+", "+(y+l)+")");
+	    		c+=(red+green+blue);
+	    		ImageIO.write(bi , "jpg", new File("C:\\Users\\justi\\eclipse-workspace\\JustinProject\\image\\chess pieces test\\"+(x+y)+".jpg"));
+    		}
     	}
-
+    	
     	return c;
     }
     
@@ -99,44 +105,57 @@ public class ExtractSquares {
         pieceMap.put(78326, "K"); // Dark Square
 
         // blank
-        pieceMap.put(86526, ".");
-        pieceMap.put(57546, ".");
+        pieceMap.put(32706, ".");
+        pieceMap.put(25392, ".");
 
     }
     
-    public static String[][] getChessboard(List<BufferedImage> squares) {
-        String[][] board = new String[8][8];
-
-        // Iterate through extracted squares and match pieces
-        for (int y = 0; y < 8; y++) {
-            for (int x = 0; x < 8; x++) {
-                int index = y * 8 + x; // Calculate index based on row-major order
-                BufferedImage square = squares.get(index);
-                String pieceAndColor = matchPiece(getAverageRGB(square));
-                board[y][x] = pieceAndColor;
-            }
-        }
+    public static String[][] getChessboard(List<BufferedImage> squares) throws IOException {
+    	// entire method weants to return pieces in a 2d array
+    	String[][] board = new String[8][8];
+    	File outputfile = new File("image.jpg");
+    	
+    	for(int y = 0; y<8;y++) {
+    		for(int x = 0; x<8;x++) {
+    			int index = y * 8 + x;
+    			BufferedImage square = squares.get(index);
+    			int rgb = getAverageRGB(square);
+    			String pieceColor = matchPiece(rgb);
+    			board[y][x] = pieceColor;
+    		}
+    	}
+//        // Iterate through extracted squares and match pieces
+//        for (int y = 0; y < 8; y++) {
+//            for (int x = 0; x < 8; x++) {
+//                int index = y * 8 + x; // Calculate index based on row-major order
+//                BufferedImage square = squares.get(index);
+//                String pieceAndColor = matchPiece(getAverageRGB(square));
+//                board[y][x] = pieceAndColor;
+//            }
+//        }
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 System.out.print(board[y][x] + " ");
             }
             System.out.println();
         }
+    	
+    	
         return board;
     }
 
     public static String matchPiece(int pieceCode) {
-
+    	return pieceCode+"";
         // Define piece codes and colors (combined light/dark squares)
        
         // Match the piece code and return the piece and color
-        String pieceAndColor = pieceMap.get(pieceCode);
-
-        if (pieceAndColor != null) {
-            return pieceAndColor;
-        } else {
-            return "";
-        }
+//        String pieceAndColor = pieceMap.get(pieceCode);
+//
+//        if (pieceAndColor != null) {
+//            return pieceAndColor;
+//        } else {
+//            return "";
+//        }
     }
     public static String[][] rotateCW(String[][] mat) {
         int M = mat.length;
@@ -209,10 +228,11 @@ public class ExtractSquares {
 	
     public String retrieveFen() throws IOException, AWTException {
     	int x1,x2,y1,y2;
-		x1 = 356;
-		y1 = 144;
-		x2 = 1621;
-		y2 = 1409;
+		x1 = Main.x1;
+		y1 = Main.y1;
+		x2 = Main.x2;
+		y2 = Main.y2;
+		
 		bot = new Robot();
 		initPieces();
 		
@@ -225,7 +245,5 @@ public class ExtractSquares {
 
     	return getFENNotation(getChessboard(b), getTurn());
     }
-    public static void main(String[] args) throws IOException, AWTException {
-    	
-    }
+
 }

@@ -36,9 +36,10 @@ public class Main implements NativeKeyListener{
 	private static ImageIcon icon;
 	private static Timer t; 
 	private static JLabel lblNewLabel = new JLabel("");
-	private static int x1,x2,y1,y2;
+	public static int x1,x2,y1,y2;
 
 	static StockfishTest sft;
+	
 	/**
 	 * Launch the application.
 	 * @throws AWTException 
@@ -48,6 +49,9 @@ public class Main implements NativeKeyListener{
 
 
 
+		t = new Timer(1500, (ActionEvent e) -> {
+			run();
+		});
 
         sft = new StockfishTest();
 		GlobalScreen.addNativeKeyListener(new Main());
@@ -79,11 +83,11 @@ public class Main implements NativeKeyListener{
 	 * @throws AWTException
 	 */
 	public Main() throws AWTException {
-		x1 = 241;
+		// GOOGLE ZOOM MUST REMAIN AT 150%
+		x1 = 356;
 		y1 = 144;
-		x2 = 1506;
+		x2 = 1621;
 		y2 = 1409;
-
 
 		initialize();
 	}
@@ -112,39 +116,50 @@ public class Main implements NativeKeyListener{
 	}
 	
 	
-	public ImageIcon returnImage(int[][]xyCoords) throws IOException {
+	public static ImageIcon returnImage(int[][]xyCoords) throws IOException, AWTException {
 		System.out.println("on");
+
 		Screenshot screenshot = new Screenshot();
 		try {
 		    BufferedImage capturedImage = screenshot.capture(x1, y1, x2, y2);
 		    capturedImage = Screenshot.convertToGrayscale(capturedImage, xyCoords);
 		    ImageIcon t = new ImageIcon(capturedImage);
 		    return t;
-		} catch (AWTException e1) {
+		} catch (AWTException | InterruptedException e1) {
 		    e1.printStackTrace();
 		}
 		return null;
 
 	}
-	public static void sleep() {
-		
-	}
+	
 
+	public static void run() {
+		try {
+			// this block of code returns an image
+			lblNewLabel.setIcon(returnImage(sft.run()));
+//			frame.setVisible(true);
+//			Thread.sleep(300);
+//			frame.setVisible(false);
+	
+		} catch (AWTException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@SuppressWarnings("static-access")
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode()==NativeKeyEvent.VC_C) {
-			
-			try {
-				 
-				lblNewLabel.setIcon(returnImage(sft.run()));
-				frame.setVisible(true);
-				Thread.sleep(300);
-				frame.setVisible(false);
-			} catch (AWTException | IOException | InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			run();	
+		}
+		if(arg0.getKeyCode()==NativeKeyEvent.VC_M) {
+			// start
+//			System.out.println("run");
+			if(t.isRunning()) {
+				t.stop();
+			} else {
+				t.start();
 			}
 			
 		}
@@ -159,14 +174,6 @@ public class Main implements NativeKeyListener{
 	public void nativeKeyTyped(NativeKeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public void changeTimerDir() {
-		if(t.isRunning()) {
-			t.stop();
-		} else {
-			t.start();
-		}
 	}
 
 	
